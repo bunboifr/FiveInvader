@@ -484,10 +484,11 @@ target_include_directories(FiveInvader PRIVATE
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     find_package(PkgConfig REQUIRED)
     find_package(X11 REQUIRED)
+    find_package(OpenSSL REQUIRED COMPONENTS Crypto)
     pkg_search_module(GLIB REQUIRED glib-2.0)
     pkg_search_module(GIO REQUIRED gio-2.0)
     target_include_directories(FiveInvader PRIVATE ${X11_INCLUDE_DIR} ${GLIB_INCLUDE_DIRS} ${GIO_INCLUDE_DIRS})
-    target_link_libraries(FiveInvader PRIVATE ${X11_LIBRARIES} ${GLIB_LIBRARIES} ${GIO_LIBRARIES})
+    target_link_libraries(FiveInvader PRIVATE OpenSSL::Crypto ${X11_LIBRARIES} ${GLIB_LIBRARIES} ${GIO_LIBRARIES})
 endif()
 
 target_precompile_headers(FiveInvader PUBLIC ${FIVEINVADER_PRECOMPILED_HEADERS})

@@ -4072,7 +4072,7 @@ void RtlEnterCriticalSection(XRTL_CRITICAL_SECTION* cs)
     static int s_waitCount = 0;
     ++s_count;
     
-    uint32_t thisThread = g_ppcContext->r13.u32;
+    be<uint32_t> thisThread = g_ppcContext->r13.u32;
     assert(thisThread != NULL);
 
     std::atomic_ref owningThread(cs->OwningThread);
@@ -4082,7 +4082,7 @@ void RtlEnterCriticalSection(XRTL_CRITICAL_SECTION* cs)
     
     while (true) 
     {
-        uint32_t previousOwner = 0;
+        be<uint32_t> previousOwner = 0;
 
         if (owningThread.compare_exchange_weak(previousOwner, thisThread) || previousOwner == thisThread)
         {
@@ -4095,7 +4095,7 @@ void RtlEnterCriticalSection(XRTL_CRITICAL_SECTION* cs)
             ++s_waitCount;
             if (s_waitCount <= 20) {
                 LOGF_WARNING("[LOCK] RtlEnterCriticalSection #{} thisThread=0x{:08X} WAITING on owner=0x{:08X} cs=0x{:08X}",
-                             s_count, thisThread, previousOwner, reinterpret_cast<uintptr_t>(cs) & 0xFFFFFFFF);
+                             s_count, thisThread.get(), previousOwner.get(), reinterpret_cast<uintptr_t>(cs) & 0xFFFFFFFF);
             }
         }
         ++loopCount;
@@ -4105,7 +4105,7 @@ void RtlEnterCriticalSection(XRTL_CRITICAL_SECTION* cs)
         if (loopCount > MAX_SPIN_LOOPS) {
             if (s_waitCount <= 30) {
                 LOGF_WARNING("[LOCK] FORCE ACQUIRE cs=0x{:08X} after {} spins (owner=0x{:08X} may be blocked)",
-                             reinterpret_cast<uintptr_t>(cs) & 0xFFFFFFFF, loopCount, previousOwner);
+                             reinterpret_cast<uintptr_t>(cs) & 0xFFFFFFFF, loopCount, previousOwner.get());
             }
             owningThread.store(thisThread);
             cs->RecursionCount = 1;
@@ -4948,12 +4948,12 @@ void XexGetModuleHandle()
 bool RtlTryEnterCriticalSection(XRTL_CRITICAL_SECTION* cs)
 {
     // printf("RtlTryEnterCriticalSection\n");
-    uint32_t thisThread = g_ppcContext->r13.u32;
+    be<uint32_t> thisThread = g_ppcContext->r13.u32;
     assert(thisThread != NULL);
 
     std::atomic_ref owningThread(cs->OwningThread);
 
-    uint32_t previousOwner = 0;
+    be<uint32_t> previousOwner = 0;
 
     if (owningThread.compare_exchange_weak(previousOwner, thisThread) || previousOwner == thisThread)
     {
@@ -6938,6 +6938,30 @@ static void StorageDevice_ReadFileVtable5(PPCContext& ctx, uint8_t* base) {
     
     ctx.r3.s32 = static_cast<int32_t>(bytesRead);
 }
+
+// Compile-first stubs for GTA V imports that do not have host implementations yet.
+#define GTA5_IMPORT_STUB(name) PPC_FUNC(name) { ctx.r3.u64 = 0; }
+GTA5_IMPORT_STUB(__imp__XamUserGetOnlineCountryFromXUID)
+GTA5_IMPORT_STUB(__imp__XamGetLanguage)
+GTA5_IMPORT_STUB(__imp__KeInsertQueueDpc)
+GTA5_IMPORT_STUB(__imp__XamUserGetMembershipTierFromXUID)
+GTA5_IMPORT_STUB(__imp__XAudioGetDuckerLevel)
+GTA5_IMPORT_STUB(__imp__XNetLogonGetTitleID)
+GTA5_IMPORT_STUB(__imp__KeInitializeDpc)
+GTA5_IMPORT_STUB(__imp__XamVoiceIsActiveProcess)
+GTA5_IMPORT_STUB(__imp__XNetLogonGetMachineID)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpStartup)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpShutdown)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpOpen)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpCloseHandle)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpConnect)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpSetStatusCallback)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpOpenRequest)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpSendRequest)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpReceiveResponse)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpQueryHeaders)
+GTA5_IMPORT_STUB(__imp__NetDll_XHttpReadData)
+#undef GTA5_IMPORT_STUB
 
 // =============================================================================
 // StorageDevice_CloseFile - vtable[10] implementation

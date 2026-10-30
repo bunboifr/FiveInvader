@@ -138,6 +138,8 @@ PPC_FUNC(sub_826A7858)
     }
     
     // Try subsystem lookup for indices 0-15 (original path)
+    // GTA IV-specific subroutines; disabled for the GTA V compile-first pass.
+#if 0
     if (playerIndex < ORIGINAL_MAX_PLAYERS)
     {
         uint32_t savedR3 = ctx.r3.u32;
@@ -167,6 +169,7 @@ PPC_FUNC(sub_826A7858)
         ctx.r3.u64 = savedR3;
         ctx.r4.u64 = savedR4;
     }
+#endif
     
 fallback_lookup:
     // Direct array access: playerManager[329 + playerIndex]

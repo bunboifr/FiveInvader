@@ -13,8 +13,11 @@
 #include <windows.h>
 #include <bcrypt.h>
 #pragma comment(lib, "bcrypt.lib")
-#else
+#elif defined(__APPLE__)
 #include <CommonCrypto/CommonCrypto.h>
+#else
+#include <climits>
+#include <openssl/evp.h>
 #endif
 
 namespace RpfExtractor
@@ -117,7 +120,7 @@ namespace RpfExtractor
         BCryptDestroyKey(hKey);
         BCryptCloseAlgorithmProvider(hAlg, 0);
         return true;
-#else
+#elif defined(__APPLE__)
         // macOS/iOS CommonCrypto - decrypt 16 times like SparkIV
         for (int round = 0; round < 16; round++)
         {
@@ -136,6 +139,39 @@ namespace RpfExtractor
             {
                 return false;
             }
+        }
+        return true;
+#else
+        if (dataLen > static_cast<size_t>(INT_MAX))
+        {
+            return false;
+        }
+
+        std::vector<uint8_t> decrypted(dataLen + EVP_MAX_BLOCK_LENGTH);
+        for (int round = 0; round < 16; round++)
+        {
+            EVP_CIPHER_CTX* context = EVP_CIPHER_CTX_new();
+            if (!context)
+            {
+                return false;
+            }
+
+            int outputLength = 0;
+            int finalLength = 0;
+            const bool success =
+                EVP_DecryptInit_ex(context, EVP_aes_256_ecb(), nullptr, key.data(), nullptr) == 1 &&
+                EVP_CIPHER_CTX_set_padding(context, 0) == 1 &&
+                EVP_DecryptUpdate(context, decrypted.data(), &outputLength, data.data(),
+                                  static_cast<int>(dataLen)) == 1 &&
+                EVP_DecryptFinal_ex(context, decrypted.data() + outputLength, &finalLength) == 1;
+            EVP_CIPHER_CTX_free(context);
+
+            if (!success || static_cast<size_t>(outputLength + finalLength) != dataLen)
+            {
+                return false;
+            }
+
+            std::memcpy(data.data(), decrypted.data(), dataLen);
         }
         return true;
 #endif
