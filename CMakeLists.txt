@@ -4,8 +4,8 @@ if(NOT DEFINED ENV{VCPKG_ROOT})
     message(FATAL_ERROR "VCPKG_ROOT is not defined!")
 endif()
 
-set(SAN_RECOMP_THIRDPARTY_ROOT ${CMAKE_SOURCE_DIR}/thirdparty)
-set(SAN_RECOMP_TOOLS_ROOT ${CMAKE_SOURCE_DIR}/tools)
+set(FIVEINVADER_THIRDPARTY_ROOT ${CMAKE_SOURCE_DIR}/thirdparty)
+set(FIVEINVADER_TOOLS_ROOT ${CMAKE_SOURCE_DIR}/tools)
 set(CMAKE_CXX_STANDARD 20)
 set(BUILD_SHARED_LIBS OFF)
 
@@ -17,23 +17,23 @@ endif()
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
-project("SanRecomp-ALL")
+project("FiveInvader-ALL")
 
 if (APPLE)
     enable_language(OBJC OBJCXX)
 endif()
 
 if (CMAKE_OSX_ARCHITECTURES)
-    set(SAN_RECOMP_ARCHITECTURE ${CMAKE_OSX_ARCHITECTURES})
+    set(FIVEINVADER_ARCHITECTURE ${CMAKE_OSX_ARCHITECTURES})
 elseif(CMAKE_SYSTEM_PROCESSOR)
-    set(SAN_RECOMP_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+    set(FIVEINVADER_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
 else()
-    set(SAN_RECOMP_ARCHITECTURE ${CMAKE_HOST_SYSTEM_PROCESSOR})
+    set(FIVEINVADER_ARCHITECTURE ${CMAKE_HOST_SYSTEM_PROCESSOR})
 endif()
-string(TOLOWER "${SAN_RECOMP_ARCHITECTURE}" SAN_RECOMP_ARCHITECTURE)
-message(STATUS "Detected architecture: ${SAN_RECOMP_ARCHITECTURE}")
+string(TOLOWER "${FIVEINVADER_ARCHITECTURE}" FIVEINVADER_ARCHITECTURE)
+message(STATUS "Detected architecture: ${FIVEINVADER_ARCHITECTURE}")
 
-if (SAN_RECOMP_ARCHITECTURE STREQUAL "x86_64" OR SAN_RECOMP_ARCHITECTURE STREQUAL "amd64")
+if (FIVEINVADER_ARCHITECTURE STREQUAL "x86_64" OR FIVEINVADER_ARCHITECTURE STREQUAL "amd64")
     # Target Sandy Bridge for all projects
     add_compile_options(
         -march=sandybridge
@@ -45,9 +45,9 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_definitions(_DEBUG)
 endif()
 
-add_subdirectory(${SAN_RECOMP_THIRDPARTY_ROOT})
-add_subdirectory(${SAN_RECOMP_TOOLS_ROOT})
+add_subdirectory(${FIVEINVADER_THIRDPARTY_ROOT})
+add_subdirectory(${FIVEINVADER_TOOLS_ROOT})
 
 # Include sub-projects.
-add_subdirectory("SanRecompLib")
-add_subdirectory("SanRecomp")
+add_subdirectory("FiveInvaderLib")
+add_subdirectory("FiveInvader")

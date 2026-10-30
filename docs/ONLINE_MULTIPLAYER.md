@@ -1,6 +1,6 @@
 # San Recomp - Online Multiplayer
 
-Online multiplayer in San Recompiled is **seamless** - it works just like the original Xbox 360 game, but **better**. The default configuration requires **no setup** - just start a multiplayer session and play with friends over the internet.
+Online multiplayer in FiveInvader is **seamless** - it works just like the original Xbox 360 game, but **better**. The default configuration requires **no setup** - just start a multiplayer session and play with friends over the internet.
 
 > San Recomp supports up to **64 players** per session - 4× the original Xbox 360 limit of 16!
 

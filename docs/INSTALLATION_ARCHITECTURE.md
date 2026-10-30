@@ -1,4 +1,4 @@
-# San Recompiled - Installation Architecture
+# FiveInvader - Installation Architecture
 
 ## Overview
 
@@ -14,7 +14,7 @@ This document describes the comprehensive installation flow that handles:
 
 ### Windows
 ```
-%LOCALAPPDATA%\SanRecomp\
+%LOCALAPPDATA%\FiveInvader\
 ├── game\                    # Extracted game files
 │   ├── default.xex
 │   ├── common\              # Extracted from common.rpf
@@ -28,11 +28,11 @@ This document describes the comprehensive installation flow that handles:
 └── temp\                    # Temporary extraction files
 ```
 
-**Path:** `C:\Users\<username>\AppData\Local\SanRecomp\`
+**Path:** `C:\Users\<username>\AppData\Local\FiveInvader\`
 
 ### Linux
 ```
-~/.local/share/SanRecomp/
+~/.local/share/FiveInvader/
 ├── game/                    # Extracted game files
 ├── dlc/                     # DLC content
 │   ├── TLAD/
@@ -42,12 +42,12 @@ This document describes the comprehensive installation flow that handles:
 └── temp/
 ```
 
-**Path:** `/home/<username>/.local/share/SanRecomp/`
-**XDG compliant:** `$XDG_DATA_HOME/SanRecomp/`
+**Path:** `/home/<username>/.local/share/FiveInvader/`
+**XDG compliant:** `$XDG_DATA_HOME/FiveInvader/`
 
 ### macOS
 ```
-~/Library/Application Support/SanRecomp/
+~/Library/Application Support/FiveInvader/
 ├── game/                    # Extracted game files
 ├── dlc/                     # DLC content
 │   ├── TLAD/
@@ -57,13 +57,13 @@ This document describes the comprehensive installation flow that handles:
 └── temp/
 ```
 
-**Path:** `/Users/<username>/Library/Application Support/SanRecomp/`
+**Path:** `/Users/<username>/Library/Application Support/FiveInvader/`
 
 ---
 
 ## Launch Arguments
 
-San Recompiled supports several command-line arguments for troubleshooting and advanced use:
+FiveInvader supports several command-line arguments for troubleshooting and advanced use:
 
 | Argument | Description |
 |----------|-------------|
@@ -78,13 +78,13 @@ San Recompiled supports several command-line arguments for troubleshooting and a
 
 ```bash
 # Force reinstallation
-./SanRecomp --install
+./FiveInvader --install
 
 # Add DLC to existing installation
-./SanRecomp --install-dlc
+./FiveInvader --install-dlc
 
 # Verify file integrity
-./SanRecomp --install-check
+./FiveInvader --install-check
 ```
 
 ---
@@ -245,7 +245,7 @@ The installer automatically scans for Title Updates in:
 ### Components
 
 ```
-SanRecomp/install/xbox360/
+FiveInvader/install/xbox360/
 ├── stfs_parser.h/cpp          # STFS container parsing
 ├── xex_patcher.h/cpp          # XEX/XEXP patch application  
 └── title_update_manager.h/cpp # High-level TU management
@@ -286,9 +286,9 @@ Cross-platform directory resolution:
 
 // Get platform-specific install directory
 auto installDir = PlatformPaths::GetInstallDirectory();
-// Windows: %LOCALAPPDATA%\SanRecomp\
-// Linux:   ~/.local/share/SanRecomp/
-// macOS:   ~/Library/Application Support/SanRecomp/
+// Windows: %LOCALAPPDATA%\FiveInvader\
+// Linux:   ~/.local/share/FiveInvader/
+// macOS:   ~/Library/Application Support/FiveInvader/
 
 auto gameDir = PlatformPaths::GetGameDirectory();        // <install>/game/
 auto shaderDir = PlatformPaths::GetShaderCacheDirectory(); // <install>/shader_cache/
@@ -501,7 +501,7 @@ MultiplayerBackend = "LAN"
 ### Session Tracker Components
 
 ```
-SanRecomp/kernel/io/
+FiveInvader/kernel/io/
 ├── session_tracker.h              # ISessionTracker interface
 ├── session_tracker.cpp            # Factory and utilities
 ├── session_tracker_community.cpp  # Community server backend
@@ -513,8 +513,8 @@ SanRecomp/kernel/io/
 
 ## References
 
-- [ISOFileSystem](../SanRecomp/install/iso_file_system.h) - Native Xbox 360 ISO parsing (based on Xenia)
-- [XContentFileSystem](../SanRecomp/install/xcontent_file_system.h) - Native STFS/SVOD parsing (based on Xenia)
-- [RpfExtractor](../SanRecomp/install/rpf_extractor.h) - Native RPF2 extraction
+- [ISOFileSystem](../FiveInvader/install/iso_file_system.h) - Native Xbox 360 ISO parsing (based on Xenia)
+- [XContentFileSystem](../FiveInvader/install/xcontent_file_system.h) - Native STFS/SVOD parsing (based on Xenia)
+- [RpfExtractor](../FiveInvader/install/rpf_extractor.h) - Native RPF2 extraction
 - [GTAMods RPF Wiki](https://gtamods.com/wiki/RPF_archive)
 - [XenosRecomp README](../tools/XenosRecomp/README.md)

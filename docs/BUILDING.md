@@ -1,6 +1,6 @@
-# Building San Recompiled
+# Building FiveInvader
 
-San Recompiled is an unofficial PC port of Grand Theft Auto IV for Xbox 360, created through static recompilation. This guide covers building the project from source.
+FiveInvader is an unofficial PC port of Grand Theft Auto IV for Xbox 360, created through static recompilation. This guide covers building the project from source.
 
 ## Supported Platforms
 
@@ -15,9 +15,9 @@ San Recompiled is an unofficial PC port of Grand Theft Auto IV for Xbox 360, cre
 
 ## 1. Clone the Repository
 
-Clone **SanRecomp** with submodules using [Git](https://git-scm.com/).
+Clone **FiveInvader** with submodules using [Git](https://git-scm.com/).
 ```
-git clone --recurse-submodules https://github.com/OZORDI/SanRecomp.git
+git clone --recurse-submodules https://github.com/triadwoozie/FiveInvader.git
 ```
 
 ### Windows
@@ -25,14 +25,14 @@ If you skipped the `--recurse-submodules` argument during cloning, you can run `
 
 ## 2. Add the Required Game Files
 
-Copy the following files from your GTA V Xbox 360 game and place them inside `./SanRecompLib/private/`:
+Copy the following files from your GTA V Xbox 360 game and place them inside `./FiveInvaderLib/private/`:
 - `default.xex` - Main executable (from game root)
 - `xbox360.rpf` - Main game archive (from game root)
 
 > [!TIP]
-> It is recommended that you install the game using [an existing San Recompiled release](https://github.com/OZORDI/SanRecomp/releases/latest) to acquire these files, otherwise you'll need to rely on third-party tools to extract them from your Xbox 360 disc or ISO.
+> It is recommended that you install the game using [an existing FiveInvader release](https://github.com/triadwoozie/FiveInvader/releases/latest) to acquire these files, otherwise you'll need to rely on third-party tools to extract them from your Xbox 360 disc or ISO.
 >
-> When sourcing these files from a San Recompiled installation, they will be stored under the `game` subdirectory.
+> When sourcing these files from a FiveInvader installation, they will be stored under the `game` subdirectory.
 
 ### Shader Files (Optional)
 
@@ -93,15 +93,15 @@ sudo port install cmake ninja pkg-config
 > If you need a Release-performant build and want to iterate on development without debugging, **it is highly recommended** that you use the `RelWithDebInfo` configuration for faster compile times.
 
 2. Under **Solution Explorer**, right-click and choose **Switch to CMake Targets View**.
-3. Right-click the **SanRecomp** project and choose **Set as Startup Item**, then choose **Add Debug Configuration**.
+3. Right-click the **FiveInvader** project and choose **Set as Startup Item**, then choose **Add Debug Configuration**.
 4. Add a `currentDir` property to the first element under `configurations` in the generated JSON and set its value to the path to your game directory (where root is the directory containing `dlc`, `game`, etc).
-5. Start **SanRecomp**. The initial compilation may take a while to complete due to code and shader recompilation.
+5. Start **FiveInvader**. The initial compilation may take a while to complete due to code and shader recompilation.
 
 #### Command Line Build (x64)
 ```powershell
 # Open Developer Command Prompt for VS 2022, then:
 cmake . --preset x64-Clang-Release
-cmake --build .\out\build\x64-Clang-Release --target SanRecomp
+cmake --build .\out\build\x64-Clang-Release --target FiveInvader
 ```
 
 ### Windows (ARM64)
@@ -110,7 +110,7 @@ For ARM64 builds, use the command line:
 ```powershell
 # Open ARM64 Developer Command Prompt for VS 2022, then:
 cmake . --preset arm64-Clang-Release
-cmake --build .\out\build\arm64-Clang-Release --target SanRecomp
+cmake --build .\out\build\arm64-Clang-Release --target FiveInvader
 ```
 
 > [!NOTE]
@@ -131,12 +131,12 @@ cmake . --preset linux-release
 
 2. Build the project using the selected configuration.
 ```bash
-cmake --build ./out/build/linux-release --target SanRecomp
+cmake --build ./out/build/linux-release --target FiveInvader
 ```
 
 3. Navigate to the directory that was specified as the output in the previous step and run the game.
 ```bash
-./SanRecomp
+./FiveInvader
 ```
 
 #### Flatpak Build
@@ -167,17 +167,17 @@ cmake . --preset macos-release -DCMAKE_OSX_ARCHITECTURES=x86_64
 
 3. Build the project using the selected configuration.
 ```bash
-cmake --build ./out/build/macos-release --target SanRecomp
+cmake --build ./out/build/macos-release --target FiveInvader
 ```
 
 4. Navigate to the directory that was specified as the output in the previous step and run the game.
 ```bash
-open "./out/build/macos-release/SanRecomp/San Recompiled.app"
+open "./out/build/macos-release/FiveInvader/FiveInvader.app"
 ```
 
 ## 5. Shader Pipeline (Development)
 
-San Recompiled includes an automated shader pipeline that converts Xbox 360 RAGE engine shaders to platform-native formats during installation.
+FiveInvader includes an automated shader pipeline that converts Xbox 360 RAGE engine shaders to platform-native formats during installation.
 
 ### How It Works
 
@@ -214,24 +214,24 @@ For development purposes, you can manually convert shaders:
 ./tools/rage_fxc_extractor/build/rage_fxc_extractor --batch shader_batch/ extracted_shaders/
 
 # Compile to shader cache
-./build_xenosrecomp/XenosRecomp/XenosRecomp extracted_shaders/ SanRecompLib/shader/shader_cache.cpp tools/XenosRecomp/XenosRecomp/shader_common.h
+./build_xenosrecomp/XenosRecomp/XenosRecomp extracted_shaders/ FiveInvaderLib/shader/shader_cache.cpp tools/XenosRecomp/XenosRecomp/shader_common.h
 ```
 
 For more details, see [SHADER_PIPELINE.md](SHADER_PIPELINE.md).
 
 ## 6. CI/CD Pipeline
 
-San Recompiled uses GitHub Actions for automated builds. On each tagged release, the pipeline builds for all supported platforms:
+FiveInvader uses GitHub Actions for automated builds. On each tagged release, the pipeline builds for all supported platforms:
 
 | Build Target | Runner | Output |
 |--------------|--------|--------|
-| Windows x64 | `windows-latest` | `SanRecomp-Windows-x64.zip` |
-| Windows ARM64 | `windows-11-arm` | `SanRecomp-Windows-ARM64.zip` |
-| Linux x64 | `ubuntu-24.04` | `SanRecomp-Linux-x64.tar.gz` |
-| Linux ARM64 | `ubuntu-24.04-arm` | `SanRecomp-Linux-ARM64.tar.gz` |
+| Windows x64 | `windows-latest` | `FiveInvader-Windows-x64.zip` |
+| Windows ARM64 | `windows-11-arm` | `FiveInvader-Windows-ARM64.zip` |
+| Linux x64 | `ubuntu-24.04` | `FiveInvader-Linux-x64.tar.gz` |
+| Linux ARM64 | `ubuntu-24.04-arm` | `FiveInvader-Linux-ARM64.tar.gz` |
 | Linux Flatpak | `ubuntu-24.04` | `io.github.ozordi.libertyrecomp.flatpak` |
-| macOS ARM64 | `macos-15` | `SanRecomp-macOS-ARM64.zip` |
-| macOS x64 | `macos-13` | `SanRecomp-macOS-x64.zip` |
+| macOS ARM64 | `macos-15` | `FiveInvader-macOS-ARM64.zip` |
+| macOS x64 | `macos-13` | `FiveInvader-macOS-x64.zip` |
 
 ### Creating a Release
 
@@ -246,8 +246,8 @@ You can also trigger a release manually from the GitHub Actions tab using the "w
 ## 7. Project Structure
 
 ```
-SanRecomp/
-├── SanRecomp/          # Main application code
+FiveInvader/
+├── FiveInvader/          # Main application code
 │   ├── apu/                # Audio processing
 │   ├── cpu/                # CPU emulation / guest thread
 │   ├── gpu/                # Graphics / video rendering
@@ -257,7 +257,7 @@ SanRecomp/
 │   ├── patches/            # GTA V specific patches
 │   ├── ui/                 # ImGui-based UI
 │   └── user/               # User config and saves
-├── SanRecompLib/       # Recompiled game code
+├── FiveInvaderLib/       # Recompiled game code
 │   ├── ppc/                # PowerPC recompiled functions
 │   ├── shader/             # Shader cache
 │   └── private/            # Game files (not in repo)

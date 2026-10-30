@@ -3,6 +3,17 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Local game assets and cross-porting references (never commit)
+/rom_data/
+/references/
+*.xex
+*.rpf
+*.iso
+/FiveInvaderLib/private/*
+!/FiveInvaderLib/private/.gitkeep
+out/
+build/
+
 # GTA IV Game Files - DO NOT COMMIT (Copyrighted)
 Grand Theft Auto IV*/
 GTA4/

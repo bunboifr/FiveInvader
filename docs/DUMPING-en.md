@@ -1,6 +1,6 @@
 # Dumping GTA V for Xbox 360
 
-This guide explains how to extract Grand Theft Auto IV game files from your Xbox 360 for use with San Recompiled.
+This guide explains how to extract Grand Theft Auto IV game files from your Xbox 360 for use with FiveInvader.
 
 ### Pre-requisites
 - Xbox 360 (modifications not necessary)
@@ -62,7 +62,7 @@ This guide explains how to extract Grand Theft Auto IV game files from your Xbox
 
 ### Alternative: Using an ISO
 
-If you have a GTA V Xbox 360 ISO file, you can use it directly with San Recompiled's installer wizard. The installer supports:
+If you have a GTA V Xbox 360 ISO file, you can use it directly with FiveInvader's installer wizard. The installer supports:
 - `.iso` files (Xbox 360 disc images)
 - Extracted game folders
 - XContent packages

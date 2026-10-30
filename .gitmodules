@@ -43,10 +43,10 @@
 [submodule "thirdparty/json"]
 	path = thirdparty/json
 	url = https://github.com/nlohmann/json
-# TODO: Create SanRecompResources repo with GTA IV specific resources
-# [submodule "SanRecompResources"]
-# 	path = SanRecompResources
-# 	url = https://github.com/OZORDI/SanRecompResources
+# TODO: Create FiveInvaderResources repo with GTA IV specific resources
+# [submodule "FiveInvaderResources"]
+# 	path = FiveInvaderResources
+# 	url = https://github.com/OZORDI/FiveInvaderResources
 [submodule "thirdparty/MoltenVK/MoltenVK"]
 	path = thirdparty/MoltenVK/MoltenVK
 	url = https://github.com/KhronosGroup/MoltenVK.git

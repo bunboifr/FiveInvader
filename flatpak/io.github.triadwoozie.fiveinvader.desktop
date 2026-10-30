@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=FiveInvader
+Exec=/app/bin/FiveInvader
+Type=Application
+Icon=io.github.triadwoozie.fiveinvader
+Categories=Game;
+Comment=Static recompilation of Grand Theft Auto IV (Xbox 360).
+MimeType=x-scheme-handler/fiveinvader
