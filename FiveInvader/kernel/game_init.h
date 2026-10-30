@@ -17,6 +17,7 @@
 // while preserving all memory state the game expects.
 // =============================================================================
 
+// TODO: Replace GTA IV virtual address with GTA V offset
 namespace GameInitGlobals {
     
     // =========================================================================

@@ -27,6 +27,8 @@
 // Location: ppc_recomp.79.cpp:37654
 // Calls XamContentCreateEx to create/open save containers
 // =============================================================================
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 extern "C" void __imp__sub_829A1C38(PPCContext& ctx, uint8_t* base);
 PPC_FUNC(sub_829A1C38)
 {
@@ -176,3 +178,4 @@ PPC_FUNC(sub_821200D0)
     
     printf("[821200D0] #%d EXIT r3=%d\n", s_count, ctx.r3.s32); fflush(stdout);
 }
+#endif

@@ -43,6 +43,7 @@ NOTES.md
 
 # Documentation - Ignore all except build/dump/install/multiplayer guides
 docs/*.md
+!docs/AGENT_HANDOVER.md
 !docs/BUILDING.md
 !docs/DUMPING-en.md
 !docs/INSTALLATION_ARCHITECTURE.md

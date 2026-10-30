@@ -36,6 +36,8 @@
 // Only the functions we actually call in the current implementation.
 // Additional declarations can be added when we implement direct replacement.
 
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 // Main initialization functions (currently called directly)
 extern "C" void __imp__sub_8218C600(PPCContext& ctx, uint8_t* base);  // Core engine init
 extern "C" void __imp__sub_82120EE8(PPCContext& ctx, uint8_t* base);  // Game manager init
@@ -43,6 +45,7 @@ extern "C" void __imp__sub_821250B0(PPCContext& ctx, uint8_t* base);  // Memory 
 extern "C" void __imp__sub_82318F60(PPCContext& ctx, uint8_t* base);  // String table lookup
 extern "C" void __imp__sub_82124080(PPCContext& ctx, uint8_t* base);  // Profile/save init
 extern "C" void __imp__sub_82120FB8(PPCContext& ctx, uint8_t* base);  // Subsystem init (63)
+#endif
 
 // =============================================================================
 // Helper Macros
@@ -103,6 +106,8 @@ extern "C" void __imp__sub_82120FB8(PPCContext& ctx, uint8_t* base);  // Subsyst
 
 namespace GameInit {
 
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 bool InitCoreEngine(PPCContext& ctx, uint8_t* base)
 {
     LOG_WARNING("[GameInit] Phase 1: InitCoreEngine starting...");
@@ -260,6 +265,39 @@ uint32_t Initialize(PPCContext& ctx, uint8_t* base)
     
     return 1;  // Success
 }
+#else
+bool InitCoreEngine(PPCContext& ctx, uint8_t* base)
+{
+    LOG_WARNING("[GameInit] Phase 1: InitCoreEngine stubbed for GTA V");
+    return true;
+}
+
+void InitGameManager(PPCContext& ctx, uint8_t* base)
+{
+    LOG_WARNING("[GameInit] Phase 2: InitGameManager stubbed for GTA V");
+}
+
+uint32_t AllocateFromPool(PPCContext& ctx, uint8_t* base, uint32_t poolPtr)
+{
+    return 0;
+}
+
+void InitProfileSystem(PPCContext& ctx, uint8_t* base)
+{
+    LOG_WARNING("[GameInit] Phase 4: InitProfileSystem stubbed for GTA V");
+}
+
+void InitSubsystems(PPCContext& ctx, uint8_t* base)
+{
+    LOG_WARNING("[GameInit] Phase 5: InitSubsystems stubbed for GTA V");
+}
+
+uint32_t Initialize(PPCContext& ctx, uint8_t* base)
+{
+    LOG_WARNING("[GameInit] GTA V Game Initialization Stub (No-Op)");
+    return 1;
+}
+#endif
 
 } // namespace GameInit
 

@@ -216,6 +216,7 @@ namespace GTA5SavePatches
 // The actual addresses need to be determined from the recompiled executable.
 // =============================================================================
 
+// TODO: Replace GTA IV virtual address with GTA V offset
 // Example: Hook CGame::Initialize to inject our patches
 // TODO: Find actual address from recompiled code
 // PPC_FUNC_IMPL(__imp__sub_82XXXXXX);
@@ -225,6 +226,7 @@ namespace GTA5SavePatches
 //     __imp__sub_82XXXXXX(ctx, base);
 // }
 
+// TODO: Replace GTA IV virtual address with GTA V offset
 // Example: Hook CGame::Process to update per-frame
 // TODO: Find actual address from recompiled code  
 // PPC_FUNC_IMPL(__imp__sub_82YYYYYY);

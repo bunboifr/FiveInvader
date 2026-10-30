@@ -6,6 +6,8 @@
 #include <kernel/memory.h>
 #include <cstring>
 
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 // sub_82990830 is a memcpy function that the recompiler couldn't handle correctly
 // because it branches to addresses that ended up in different recompiled functions.
 // The function signature is: void memcpy(dst: r3, src: r4, size: r5)
@@ -45,3 +47,4 @@ PPC_FUNC(sub_82990880) {
         std::memcpy(dst, src, size);
     }
 }
+#endif

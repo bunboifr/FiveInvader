@@ -11,13 +11,17 @@ void os::logger::Init()
     g_hStandardOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-void os::logger::Log(const std::string_view str, ELogType type, const char* func)
+void os::logger::Log(const std::string_view str, os::logger::ELogType type, const char* func)
 {
     if (!os::process::g_consoleVisible)
         return;
 
     switch (type)
     {
+        case ELogType::Info:
+            SetConsoleTextAttribute(g_hStandardOutput, FOREGROUND_WHITE | FOREGROUND_INTENSITY);
+            break;
+
         case ELogType::Utility:
             SetConsoleTextAttribute(g_hStandardOutput, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             break;

@@ -94,6 +94,8 @@ namespace PlayerLimitPatches
 // All 199+ call sites go through this function.
 // =============================================================================
 
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 // sub_826A6CC8 and sub_826AE738 are already declared in ppc_recomp_shared.h
 
 // Original implementation reference
@@ -327,6 +329,7 @@ PPC_FUNC(sub_8238F700)
 {
     __imp__sub_8238F700(ctx, base);
 }
+#endif
 
 // =============================================================================
 // Phase 3: Memory Allocation Expansion Hooks

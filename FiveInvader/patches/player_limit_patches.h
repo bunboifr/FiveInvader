@@ -86,6 +86,8 @@ namespace PlayerLoopPatches
         const char* description;
     };
     
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
     // High-priority player loops from ppc_recomp.44.cpp (15 functions)
     static constexpr LoopPatchInfo PLAYER_LOOPS_44[] = {
         {0x8267DB90, "sub_8267DB90", "Distance/proximity check loop"},
@@ -119,6 +121,12 @@ namespace PlayerLoopPatches
         {0x827FC738, "sub_827FC738", "ppc_recomp.64: vtable call loop"},
         {0x8238F700, "sub_8238F700", "ppc_recomp.18: distance check loop"},
     };
+#else
+    // Legacy GTA IV player loop arrays stubbed out for GTA V layout
+    static constexpr LoopPatchInfo PLAYER_LOOPS_44[] = {};
+    static constexpr LoopPatchInfo PLAYER_LOOPS_46[] = {};
+    static constexpr LoopPatchInfo PLAYER_LOOPS_OTHER[] = {};
+#endif
     
     // Total count for validation
     static constexpr size_t TOTAL_LOOP_PATCHES = 

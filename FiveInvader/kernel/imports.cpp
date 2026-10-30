@@ -148,6 +148,8 @@ static SyncPrimitivePatcher g_syncPatcher;
 
 // Registry of known spin-wait functions that need yield injection
 // These are addresses of functions that contain busy-wait loops
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 static const std::unordered_set<uint32_t> g_knownSpinWaitFunctions = {
     0x82672E50,  // Audio/streaming init - has 2 busy-wait loops
     0x82672AA8,  // Loop 1 helper in sub_82672E50
@@ -156,6 +158,9 @@ static const std::unordered_set<uint32_t> g_knownSpinWaitFunctions = {
     0x827DB880,  // Worker manager shutdown loop
     0x823005E0,  // Worker cleanup - waits for workers to exit
 };
+#else
+static const std::unordered_set<uint32_t> g_knownSpinWaitFunctions = {};
+#endif
 
 // Helper to check if a function address is a known spin-wait
 inline bool IsKnownSpinWait(uint32_t funcAddr) {
@@ -7622,11 +7627,14 @@ static std::unordered_map<uint32_t, std::pair<uint32_t, uint32_t>> g_completedAs
 
 // sub_82192578 - Thread initialization called by recompiled code
 // Let it run naturally - return success
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 PPC_FUNC(sub_82192578) {
     ctx.r3.u32 = 1;  // Return success
 }
 
 GUEST_FUNCTION_HOOK(sub_825383D8, XapiInitProcess)
+#endif
 GUEST_FUNCTION_HOOK(__imp__XGetVideoMode, VdQueryVideoMode); // XGetVideoMode
 GUEST_FUNCTION_HOOK(__imp__XNotifyGetNext, XNotifyGetNext);
 GUEST_FUNCTION_HOOK(__imp__XGetGameRegion, XGetGameRegion);

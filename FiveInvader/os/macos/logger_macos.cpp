@@ -111,7 +111,7 @@ void os::logger::Init()
      }
 }
 
-void os::logger::Log(const std::string_view str, ELogType type, const char* func)
+void os::logger::Log(const std::string_view str, os::logger::ELogType type, const char* func)
 {
     if (func)
     {

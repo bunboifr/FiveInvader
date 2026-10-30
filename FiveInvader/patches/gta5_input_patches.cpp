@@ -1,6 +1,7 @@
 // GTA V Input Remapping and Patches
 // Handles controller input translation for GTA V controls
 
+#include "gta5_input_patches.h"
 #include <stdafx.h>
 #include <hid/hid.h>
 #include <user/config.h>

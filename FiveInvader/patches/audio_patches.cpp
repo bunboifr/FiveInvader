@@ -207,6 +207,8 @@ void AudioConfigChanged()
 // These hooks intercept the actual PPC audio initialization functions
 // to track when the audio system is ready for volume control.
 
+// TODO: Replace GTA IV virtual address with GTA V offset
+#if 0
 // External declarations for original PPC functions
 extern "C" void __imp__sub_822EEDB8(PPCContext& ctx, uint8_t* base);
 extern "C" void __imp__sub_821AB5F8(PPCContext& ctx, uint8_t* base);
@@ -230,3 +232,4 @@ PPC_FUNC(sub_821AB5F8) {
     
     LOG_INFO("[Audio] GTA V radio system initialized");
 }
+#endif
