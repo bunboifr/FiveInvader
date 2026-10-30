@@ -23,6 +23,7 @@ gta4/
 *.xcp
 game/
 game
+!FiveInvaderLib/game/
 
 # GTA IV DLC ZIP files - DO NOT COMMIT (Copyrighted)
 GAME DLC/*.zip
@@ -46,6 +47,7 @@ docs/*.md
 !docs/AGENT_HANDOVER.md
 !docs/BUILDING.md
 !docs/DUMPING-en.md
+!docs/GTA5_BRINGUP_ROADMAP.md
 !docs/INSTALLATION_ARCHITECTURE.md
 !docs/ONLINE_MULTIPLAYER.md
 

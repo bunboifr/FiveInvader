@@ -1,0 +1,76 @@
+# =============================================================================
+# FiveInvader - GTA V Xbox 360 Indirect Jump / Switch Table Definitions
+# Target: GTA V Xbox 360 (default.xex)
+# Generator: XenonAnalyse / Ghidra / IDA Pro PPC plugin
+# =============================================================================
+#
+# XenonRecomp Static Binary Translation Architecture:
+#
+# In PowerPC 32-bit (Xbox 360 Xenon), switch-case statements and indirect branches
+# are frequently compiled into jump tables. The pattern typically involves:
+#   1. Bounds check on the input case value (e.g. `cmplwi r3, N`)
+#   2. Calculation of the jump table offset (e.g. `slwi r11, r3, 2`)
+#   3. Loading the destination virtual address from a static table in `.rdata`
+#   4. Moving the destination into CTR (`mtctr r11`) and executing `bctr`
+#
+# Because the destination of an indirect branch (`bctr` or `bclr`) is computed
+# at runtime, static recompilation cannot infer control flow edges without
+# explicit table metadata.
+#
+# XenonRecomp reads this file to reconstruct C++ `switch (...)` blocks or
+# direct jump tables, preserving basic block continuity and CFG validity.
+#
+# =============================================================================
+# Schema Specification:
+#
+# [[switch]]
+# base    = <Hex Virtual Address>  # Address of the indirect branch instruction (or table base)
+# r       = <Register Index>       # PowerPC register holding target/offset (e.g., 10 or 11)
+# default = <Hex Virtual Address>  # Address executed when case is out-of-range (default case)
+# labels  = [                      # Ordered array of case targets (index 0, 1, 2, ...)
+#     <Hex Address Case 0>,
+#     <Hex Address Case 1>,
+#     ...
+# ]
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Template / Example 1: Absolute Jump Table (Dense integer range)
+# -----------------------------------------------------------------------------
+# In an absolute jump table, the table directly contains 32-bit virtual addresses
+# pointing to basic block labels.
+#
+# [[switch]]
+# base = 0x82500000
+# r = 11
+# default = 0x82500120
+# labels = [
+#     0x82500040, # Case 0
+#     0x82500078, # Case 1
+#     0x825000B0, # Case 2
+#     0x825000F4, # Case 3
+#     0x82500120  # Case 4 (falls through to default)
+# ]
+
+# -----------------------------------------------------------------------------
+# Template / Example 2: Relative / Manual Jump Table (Offset-based)
+# -----------------------------------------------------------------------------
+# In some compiler configurations, tables store signed 16-bit or 32-bit offsets
+# relative to a base instruction. XenonRecomp resolves these into target labels.
+#
+# [[switch]]
+# base = 0x82600000
+# r = 10
+# default = 0x82600200
+# labels = [
+#     0x82600050, # Case 0
+#     0x826000A0, # Case 1
+#     0x82600100, # Case 2
+#     0x82600180  # Case 3
+# ]
+
+# -----------------------------------------------------------------------------
+# ACTIVE SWITCH TABLES:
+# On the primary build host, populate this section using XenonAnalyse output
+# generated against GTA V default.xex.
+# -----------------------------------------------------------------------------
